@@ -9,13 +9,13 @@ type ProductsProps = {
   handler: () => void;
 };
 
-const ProductCard = ({productsId,price,name,stock,handler,photo}:ProductsProps) => {
+const ProductCard = ({price,name,handler,photo}:ProductsProps) => {
   return (
-    <div className="flex flex-col gap-2 h-[18rem] w-[16rem] shadow-xl p-[calc(18rem - 1rem)] relative">
+    <div className="flex flex-col gap-2 h-[15rem] w-[13rem] rounded-lg shadow-xl p-[calc(18rem - 1rem)] relative">
       {/* image */}
       <img src={photo} alt="cardImage"  style={{
-        height:"12rem",
-        width:"12rem",
+        height:"10rem",
+        width:"10rem",
         objectFit:"cover",
         margin:"auto",
         marginBottom:"0.5rem"
