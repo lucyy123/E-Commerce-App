@@ -7,7 +7,7 @@ const Home = () => {
 
   }
   return (
-    <div className="px-10 h-[calc(100vh - 5rem)]">
+    <div className="px-10 h-[calc(100vh - 8rem)]">
       {/* Banner image */}
       <section
         style={{
