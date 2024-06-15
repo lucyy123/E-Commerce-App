@@ -1,6 +1,9 @@
+import { Response, Request,NextFunction } from "express";
 import { EnumType } from "typescript";
 
-export interface NewUserRequestBody{
+
+// use interface for class or object
+export interface NewUserRequestBody {
     _id:string;
     name:string;
     email:string;
@@ -9,3 +12,8 @@ export interface NewUserRequestBody{
     gender:string;
     dob:Date;
 }
+
+// user type for prop OR functions
+export type ControllerType = (
+    req:Request,res:Response,next:NextFunction
+)=> Promise<void|Response<any,Record<string,any>>>
