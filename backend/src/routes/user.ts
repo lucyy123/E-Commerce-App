@@ -25,7 +25,9 @@ app.get("/all",getAllUsers)
  //  delete user by  ID
 
 // app.get("/:id",deleteUser)
-//------------OPTIMIZED VERSIO---------------
+
+
+//------------OPTIMIZED VERSION---------------
 
 app.route("/:id").get(getUserbyID).delete(deleteUser)
 
