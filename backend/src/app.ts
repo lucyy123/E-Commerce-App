@@ -1,7 +1,11 @@
 import express from "express";
 import { connnectDb } from "./utils/mongoDb.js";
-import userRoute from "./routes/user.js";
 import { errorMiddleWare } from "./middlewares/error.js";
+
+// importing routes
+import userRoute from "./routes/user.js";
+import productRoute from "./routes/product.js"
+
 
 const port = 4000;
 const app = express();
@@ -23,7 +27,8 @@ return res.status(200).json({
 // USING ROUTES
 
 app.use("/api/v1/user", userRoute);
-
+app.use("/api/v1/product", productRoute);
+app.use("/uploads",express.static("uploads"))
 
 // to check the error after route
 app.use(errorMiddleWare)

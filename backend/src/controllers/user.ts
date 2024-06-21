@@ -21,7 +21,7 @@ export const newUser = TryCatch(
       console.log("User is Already exist!");
       return res.status(201).json({
         success: true,
-        message: `Welcome user ${name} `,
+        message: `Welcome ${name} `,
       });
     }
 

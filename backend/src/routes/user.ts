@@ -1,37 +1,36 @@
-import  express from "express";
-import { newUser,getAllUsers, getUserbyID, deleteUser } from "../controllers/user.js";
+import { AdminOnly } from './../middlewares/auth.js';
+import express from "express";
+import {
+  newUser,
+  getAllUsers,
+  getUserbyID,
+  deleteUser,
+} from "../controllers/user.js";
 
-
-const app = express.Router()
+const app = express.Router();
 
 //  Route -> /api/v1/user/new
 //  create new user
-app.post("/new",newUser)
-
-
+app.post("/new", newUser);
 
 //  Route -> /api/v1/user/all
 //  get all users
-app.get("/all",getAllUsers)
+app.get("/all", AdminOnly,getAllUsers);
 
-  // ----  Common Method--------
-  // if the route is same then we can optimize the code
- //  Route -> /api/v1/user/UserID
+// ----  Common Method--------
+// if the route is same then we can optimize the code
+//  Route -> /api/v1/user/UserID
 ///  get user by  ID
 
 // app .get("/:id",getUserbyID)
 
- //  Route -> /api/v1/user/UserID
- //  delete user by  ID
+//  Route -> /api/v1/user/UserID
+//  delete user by  ID
 
 // app.get("/:id",deleteUser)
 
-
 //------------OPTIMIZED VERSION---------------
 
-app.route("/:id").get(getUserbyID).delete(deleteUser)
+app.route("/:id").get(getUserbyID).delete(AdminOnly,deleteUser);
 
-
-
-
-export default app
+export default app;
