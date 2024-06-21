@@ -1,0 +1,13 @@
+
+
+---------------------------------------- PACKAGES----------------------------------
+
+ 1. MULTER
+      defination    :- Uses for images uploads and storage
+           why      :- we stores the upload images in the local maching becouse its easiar to access and its fast
+
+ 2.UUID
+       defination   :- uses for to create the unique Id 
+              why   :- lets assumed we have upload a image multiple times so, we have two image if we need to delete one image then both gets deleted         
+
+  

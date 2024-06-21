@@ -12,6 +12,14 @@ export interface NewUserRequestBody {
     gender:string;
     dob:Date;
 }
+export interface NewProductRequestBody {
+    name:string;
+    photo:string;
+    stock:number;
+    category:string;
+    price:number;
+    
+}
 
 // user type for prop OR functions
 export type ControllerType = (
