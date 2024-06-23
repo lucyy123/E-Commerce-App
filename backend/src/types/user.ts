@@ -46,3 +46,10 @@ $lte:number
 
     category?:string;
 }
+
+
+export type InvalidateCatheProps = {
+    product?:boolean;
+    admin?:boolean;
+    order?:boolean;
+}

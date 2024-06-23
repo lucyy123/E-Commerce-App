@@ -1,6 +1,7 @@
 import express from "express";
 import { connnectDb } from "./utils/mongoDb.js";
 import { errorMiddleWare } from "./middlewares/error.js";
+import nodecache from "node-cache"
 
 // importing routes
 import userRoute from "./routes/user.js";
@@ -9,9 +10,15 @@ import productRoute from "./routes/product.js"
 
 const port = 4000;
 const app = express();
+
+// connecting to the mongo DB data base
 connnectDb();
 
-// this is one middleware
+// caching the data
+
+export const myCache=new nodecache();
+
+// this is one middleware use to send the data from body of a request
 app.use(express.json());
 
 

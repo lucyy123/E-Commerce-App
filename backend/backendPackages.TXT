@@ -1,5 +1,16 @@
 
 
+
+-------------------------------------- FOLDER STRUCTURES -------------------------------
+
+FRONTEND-- 
+          src -----
+              - assest
+              - components
+              - pages  
+
+BACKEND
+
 ---------------------------------------- PACKAGES----------------------------------
 
  1. MULTER
@@ -10,4 +21,12 @@
        defination   :- uses for to create the unique Id 
               why   :- lets assumed we have upload a image multiple times so, we have two image if we need to delete one image then both gets deleted         
 
-  
+3.FAKER 
+defination          :- faker is use to create the fake date (but reasonalable)
+why                 :- to create multiple date at no time (for unit testing)
+
+4. NODE-CACHE  
+ defination :  is use for caching the data
+ why          :         when we hit the request first time then data comes from the database, but what if user hit request
+               multiple time so interaction with dats base multile times is
+               slower the process, if we stored the data in cache ,so on second time data wil come form cache
