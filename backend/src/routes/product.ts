@@ -2,7 +2,7 @@ import { AdminOnly } from './../middlewares/auth.js';
 import exp from "constants"
 import express from "express"
 import { singleUpload } from '../middlewares/multer.js';
-import { getlatestProducts, newProduct,getGategories,AdminProducts,deleteProduct,updateProduct,singleProduct } from '../controllers/product.js';
+import { getlatestProducts, newProduct,getGategories,AdminProducts,deleteProduct,updateProduct,singleProduct, getSearchedProducts } from '../controllers/product.js';
 
 const app =express.Router();
 
@@ -13,6 +13,10 @@ const app =express.Router();
 app.post("/new",AdminOnly,singleUpload,newProduct);
 // get the latest added products s  endpoint :- api/v1/product/lates
 app.get("/latest",getlatestProducts)
+
+// get the  filtered Products   endpoint :- api/v1/product/all?query=price.
+app.get ("/all",getSearchedProducts);
+
 // post the new products  endpoint :- api/v1/product/category
 app.get("/category",getGategories)
 // post the new products  endpoint :- api/v1/product/admin-products
