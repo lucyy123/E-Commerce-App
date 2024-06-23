@@ -1,4 +1,4 @@
-import { connnectDb } from './../utils/mongoDb.js';
+import { connnectDb } from "./../utils/mongoDb.js";
 import { TryCatch } from "../middlewares/error.js";
 import { Product } from "../models/product.js";
 import {
@@ -8,63 +8,42 @@ import {
   SearchRequestQuery,
 } from "../types/user.js";
 
-import { faker } from '@faker-js/faker';
-
+import { faker } from "@faker-js/faker";
 
 import { Request, NextFunction, Response } from "express";
 import ErrorHandler from "../utils/errorHandlerClass.js";
 import { rm } from "fs";
-
-// create / post new product
-export const newProduct = TryCatch(
-  async (
-    req: Request<{}, {}, NewProductRequestBody>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const { name, price, stock, category } = req.body;
-    const photo = req.file;
-
-    if (!name || !price || !stock || !category) {
-      rm(photo!.path, () => {
-        console.log("Photo is Deleted");
-      });
-      return next(new ErrorHandler("Please enter all feilds", 400));
-    }
-    if (!photo) return next(new ErrorHandler("Please add photo", 400));
-
-    await Product.create({
-      name,
-      price,
-      stock,
-      category: category.toLowerCase(),
-      photo: photo?.path,
-    });
-
-    //"Malformed part header":- do not leave the space in the key of form data
-    return res.status(201).json({
-      success: true,
-      message: "Product created successfully",
-    });
-  }
-);
+import { myCache } from "../app.js";
+import { invalidateCatch } from "../utils/invalidateCache.js";
+import { InvalidateCatheProps } from "../types/user.js";
 
 // get the latest products
 
+// revaliding -- new product - update product - delete product
+
 export const getlatestProducts = TryCatch(async (req, res, next) => {
-  const latesProducts = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+
+  let latestProducts;
+
+
+if(myCache.has("latesProducts")){
+  latestProducts=JSON.parse(myCache.get("latesProducts")!)
+}else{
+  myCache.set("latesProducts",JSON.stringify(latestProducts))
+  latestProducts = await Product.find({}).sort({ createdAt: -1 }).limit(5);
+}
 
   //"Malformed part header":- do not leave the space in the key of form data
   return res.status(201).json({
     success: true,
-    latesProducts,
+    latestProducts,
   });
 });
 
 // get filtered filters
 
 export const getSearchedProducts = TryCatch(
-  async (req: Request<{}, {}, {}, SearchRequestQuery>,res,next)  => {
+  async (req: Request<{}, {}, {}, SearchRequestQuery>, res, next) => {
     const { search, sort, category, price } = req.query;
 
     const page = Number(req.query.page) || 1;
@@ -110,15 +89,24 @@ export const getSearchedProducts = TryCatch(
     return res.status(200).json({
       success: true,
       products,
-      total_Pages
+      total_Pages,
     });
   }
 );
-
+// revaliding -- new product - update product - delete product
 export const getGategories = TryCatch(async (req, res, next) => {
-  const categories = await Product.distinct("category");
-  // Distinct {unique or isolated} :-
-  //Finds the distinct values for a specified field across a single collection or view and returns the results in an array.
+  let categories;
+
+//caching-
+
+  if (myCache.has("categories")) {
+    categories = JSON.parse(myCache.get("categories")!);
+  } else {
+    categories = await Product.distinct("category");
+     myCache.set("categories", JSON.stringify(categories));
+    // Distinct {unique or isolated} :-
+    //Finds the distinct values for a specified field across a single collection or view and returns the results in an array.
+  }
 
   return res.status(200).json({
     success: true,
@@ -127,8 +115,18 @@ export const getGategories = TryCatch(async (req, res, next) => {
 });
 
 // to get all the list of products
+// revaliding -- new product - update product - delete product
+
 export const AdminProducts = TryCatch(async (req, res, next) => {
-  const products = await Product.find({});
+let products;
+
+  if(myCache.has("admin-products")){
+    products=JSON.parse(myCache.get("admin-products")!)
+  }else{
+   products = await Product.find({});
+
+   myCache.set("admin-products",JSON.stringify(products))
+  }
 
   return res.status(200).json({
     success: true,
@@ -137,17 +135,66 @@ export const AdminProducts = TryCatch(async (req, res, next) => {
 });
 
 // get single products by its ID
+// revaliding -- new product - update product - delete product
+
 export const singleProduct = TryCatch(async (req, res, next) => {
   const { id } = req.params;
   console.log("products id:", id);
+let product;
+if(myCache.has(`product-${id}`)){
+  product=JSON.parse(myCache.get(`product-${id}`)!)
+}else{
+  product = await Product.findById(id);
+  myCache.set(`product-${id}`,JSON.stringify(product));
 
-  const product = await Product.findById(id);
+}
+
 
   return res.status(200).json({
     success: true,
     product,
   });
 });
+
+
+
+
+// create / post new product
+export const newProduct = TryCatch(
+  async (
+    req: Request<{}, {}, NewProductRequestBody>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { name, price, stock, category } = req.body;
+    const photo = req.file;
+
+    if (!name || !price || !stock || !category) {
+      rm(photo!.path, () => {
+        console.log("Photo is Deleted");
+      });
+      return next(new ErrorHandler("Please enter all feilds", 400));
+    }
+    if (!photo) return next(new ErrorHandler("Please add photo", 400));
+
+    await Product.create({
+      name,
+      price,
+      stock,
+      category: category.toLowerCase(),
+      photo: photo?.path,
+    });
+
+await invalidateCatch ({product:true})
+
+    //"Malformed part header":- do not leave the space in the key of form data
+    return res.status(201).json({
+      success: true,
+      message: "Product created successfully",
+    });
+  }
+);
+
 
 export const updateProduct = TryCatch(async (req, res, next) => {
   const { id } = req.params;
@@ -178,6 +225,7 @@ export const updateProduct = TryCatch(async (req, res, next) => {
   //.save is used to save the collection details
   await product.save();
 
+    await invalidateCatch({product:true})
   return res.status(200).json({
     success: true,
     message: "Product updated successfully",
@@ -198,6 +246,8 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
   });
 
   await product.deleteOne();
+ 
+  await invalidateCatch({product:true});
 
   return res.status(200).json({
     success: true,
@@ -205,14 +255,11 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
   });
 });
 
-
-
 // const generateRandomProducts = async  (count:number=10)=>{
 
 //   const products=[]
 
 //   for (let i=0;i<count;i++){
-
 
 //     const prouduct ={
 
@@ -223,7 +270,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
 //       category: faker.commerce.department(),
 //       createdAt: new Date (faker.date.past()),
 //       updatedAt: new Date (faker.date.recent()),
-   
+
 //     };
 //     products.push(prouduct);
 //   }
@@ -232,7 +279,6 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
 //   console.log({successe:true})
 // }
 // // generateRandomProducts(40)
-
 
 // const deletedProducts = async (count:number=10)=>{
 
