@@ -1,6 +1,6 @@
 import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
-import { InvalidateCatheProps } from "../types/user.js";
+import { InvalidateCatheProps } from "../types/types.js";
 
 export const invalidateCatch = async ({product,order,admin}:InvalidateCatheProps)=>{
 if(product){

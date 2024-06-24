@@ -9,6 +9,7 @@ import morgan from "morgan"
 // importing routes
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js"
+import orderRoutes from "./routes/order.js"
 
 
 const app = express();
@@ -39,9 +40,12 @@ return res.status(200).json({
 });
 
 // USING ROUTES
-
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
+app.use("/api/v1/order", orderRoutes);
+
+
+// for accessing the uploaded photos from URL
 app.use("/uploads",express.static("uploads"))
 
 // to check the error after route
