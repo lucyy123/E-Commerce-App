@@ -2,7 +2,7 @@ import { Response, Request,NextFunction } from "express";
 import { EnumType } from "typescript";
 
 
-// use interface for class or object
+// new user 
 export interface NewUserRequestBody {
     _id:string;
     name:string;
@@ -12,6 +12,7 @@ export interface NewUserRequestBody {
     gender:string;
     dob:Date;
 }
+// new product
 export interface NewProductRequestBody {
     name:string;
     photo:string;
@@ -19,6 +20,38 @@ export interface NewProductRequestBody {
     category:string;
     price:number;
 }
+
+// new order
+export interface newOrderReqBody {
+tax:number;
+user:string;
+total:number;
+subTotal:number;
+discount:number;
+shippingCharges:number;
+status:string;
+shippingInfo:shippingInfo;
+orderItems:orderItems[];
+}
+
+
+export type shippingInfo ={
+    address:string;
+    city:string;
+    pinCode:number;
+    state:string;
+    country:string;
+}
+
+export type orderItems={
+    name:string;
+    photo:string;
+    price:number;
+    quantity:number;
+    productId:string;
+
+}
+
 
 // user type for prop OR functions
 export type ControllerType = (
@@ -53,3 +86,4 @@ export type InvalidateCatheProps = {
     admin?:boolean;
     order?:boolean;
 }
+

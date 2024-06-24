@@ -1,21 +1,17 @@
-import { connnectDb } from "./../utils/mongoDb.js";
 import { TryCatch } from "../middlewares/error.js";
 import { Product } from "../models/product.js";
 import {
   BaseQuery,
   NewProductRequestBody,
-  NewUserRequestBody,
-  SearchRequestQuery,
-} from "../types/user.js";
+  SearchRequestQuery
+} from "../types/types.js";
 
-import { faker } from "@faker-js/faker";
 
-import { Request, NextFunction, Response } from "express";
-import ErrorHandler from "../utils/errorHandlerClass.js";
+import { NextFunction, Request, Response } from "express";
 import { rm } from "fs";
 import { myCache } from "../app.js";
+import ErrorHandler from "../utils/errorHandlerClass.js";
 import { invalidateCatch } from "../utils/invalidateCache.js";
-import { InvalidateCatheProps } from "../types/user.js";
 
 // get the latest products
 

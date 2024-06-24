@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
+import { ControllerType } from "../types/types.js";
 import ErrorHandler from "../utils/errorHandlerClass.js";
-import { ControllerType } from "../types/user.js";
 
 export const errorMiddleWare = (
   err: ErrorHandler,
@@ -15,7 +15,7 @@ export const errorMiddleWare = (
   //e--> num += 1  ---> short form
 
   return res.status(err.statusCode).json({
-    success: true,
+    success: false,
     message: err.message,
   });
 };
