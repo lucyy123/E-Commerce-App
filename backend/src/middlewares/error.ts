@@ -8,11 +8,17 @@ export const errorMiddleWare = (
   res: Response,
   next: NextFunction
 ) => {
-  // err.message = err.message || ""   ----> long form
+  // err.message = err.message || "some error form backend side"   ----> long form
   err.message ||= "some error from backend side"; // -----> short form
- err.statusCode ||= 500;
+  err.statusCode ||= 500;
+  console.log('err:', err)
   //e--> num = num +1 ---> long form
   //e--> num += 1  ---> short form
+  
+if(err.name==="CastError") {
+  err.message="Invalid Order ID"
+}
+
 
   return res.status(err.statusCode).json({
     success: false,
