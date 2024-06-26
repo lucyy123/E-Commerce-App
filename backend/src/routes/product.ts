@@ -2,7 +2,7 @@ import { AdminOnly } from './../middlewares/auth.js';
 import exp from "constants"
 import express from "express"
 import { singleUpload } from '../middlewares/multer.js';
-import { getlatestProducts, newProduct,getGategories,AdminProducts,deleteProduct,updateProduct,singleProduct, getSearchedProducts } from '../controllers/product.js';
+import { getlatestProducts, newProduct,getGategories,AdminProducts,deleteProduct,updateProduct,getSingleProduct, getSearchedProducts } from '../controllers/product.js';
 
 const app =express.Router();
 
@@ -23,7 +23,7 @@ app.get("/category",getGategories)
 app.get("/admin-products",AdminOnly,AdminProducts)
 
 // to get the product, delete, and update
-app.route("/:id").get(singleProduct).put(AdminOnly,singleUpload,updateProduct).delete(AdminOnly, deleteProduct)
+app.route("/:id").get(getSingleProduct).put(AdminOnly,singleUpload,updateProduct).delete(AdminOnly, deleteProduct)
 
 
 export default app;

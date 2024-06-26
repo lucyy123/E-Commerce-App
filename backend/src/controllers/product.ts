@@ -133,7 +133,7 @@ let products;
 // get single products by its ID
 // revaliding -- new product - update product - delete product
 
-export const singleProduct = TryCatch(async (req, res, next) => {
+export const getSingleProduct = TryCatch(async (req, res, next) => {
   const { id } = req.params;
   console.log("products id:", id);
 let product;
