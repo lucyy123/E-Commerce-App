@@ -26,7 +26,6 @@ if(!user){
 // but the user does not have the necessary permissions to access the resource
 if(user?.role !="admin"){
    return next((new ErrorHandler("You Don't have the permission,Forbidden",403)))
-
 }
 
 next()

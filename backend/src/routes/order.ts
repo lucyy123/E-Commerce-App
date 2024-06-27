@@ -1,5 +1,5 @@
 import express from "express";
-import { newOrder, myOrders, getAllOrders ,getSingleOrder} from "../controllers/order.js";
+import { newOrder, myOrders, getAllOrders ,getSingleOrder,processOrder,deleteOrder} from "../controllers/order.js";
 import { AdminOnly } from "../middlewares/auth.js";
 const app = express.Router();
 
@@ -18,6 +18,7 @@ app.get("/all", AdminOnly, getAllOrders);
 
 // get Single  order by its ID  -->
 // route ==> /api/v1/order/:id
-app.get("/:id", getSingleOrder);
+
+app.route("id").get(getSingleOrder).put(AdminOnly,processOrder).delete(AdminOnly,deleteOrder)
 
 export default app;
