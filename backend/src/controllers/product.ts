@@ -141,10 +141,10 @@ if(myCache.has(`product-${id}`)){
   product=JSON.parse(myCache.get(`product-${id}`)!)
 }else{
   product = await Product.findById(id);
+  if(!product) return next(new ErrorHandler("Product Not Found",404))
   myCache.set(`product-${id}`,JSON.stringify(product));
 
 }
-
 
   return res.status(200).json({
     success: true,
@@ -221,7 +221,8 @@ export const updateProduct = TryCatch(async (req, res, next) => {
   //.save is used to save the collection details
   await product.save();
 
-    await invalidateCatch({product:true})
+   
+  await invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
   return res.status(200).json({
     success: true,
     message: "Product updated successfully",
@@ -243,7 +244,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
 
   await product.deleteOne();
  
-  await invalidateCatch({product:true});
+  await invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
 
   return res.status(200).json({
     success: true,
