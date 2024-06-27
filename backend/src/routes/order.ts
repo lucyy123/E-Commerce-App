@@ -19,6 +19,6 @@ app.get("/all", AdminOnly, getAllOrders);
 // get Single  order by its ID  -->
 // route ==> /api/v1/order/:id
 
-app.route("id").get(getSingleOrder).put(AdminOnly,processOrder).delete(AdminOnly,deleteOrder)
+app.route("/:id").get(getSingleOrder).put(AdminOnly,processOrder).delete(AdminOnly,deleteOrder)
 
 export default app;
