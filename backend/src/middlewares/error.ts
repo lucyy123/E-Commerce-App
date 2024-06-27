@@ -19,11 +19,17 @@ export const errorMiddleWare = (
 if(err.name==="CastError") {
   err.message="Invalid Order ID"
 }
+if(err.name =="MongoServerError"){
+  err.message= "Please change the input values"
+}
+
 
 
   return res.status(err.statusCode).json({
     success: false,
-    message: err.message,
+    message: err.message
+
+    ,
   });
 };
 

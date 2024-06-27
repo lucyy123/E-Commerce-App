@@ -10,6 +10,7 @@ import morgan from "morgan"
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
+import paymentRoutes from "./routes/payment.js"
 
 
 const app = express();
@@ -43,6 +44,8 @@ return res.status(200).json({
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/payment", paymentRoutes);
+
 
 
 // for accessing the uploaded photos from URL
