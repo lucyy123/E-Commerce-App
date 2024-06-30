@@ -4,6 +4,7 @@ import { errorMiddleWare } from "./middlewares/error.js";
 import nodecache from "node-cache"
 import { config } from "dotenv";
 import morgan from "morgan"
+import Stripe from "stripe";
 
 
 // importing routes
@@ -15,17 +16,23 @@ import dashboardRoutes from "./routes/dashboard.js"
 
 
 
+
 const app = express();
 // initilize the config from dotenv package to access the values of .env file
 config()
 const port = process.env.PORT || 4000;
 const mongoUri= process.env.MONGO_URL || ""
+const stripeKey= process.env.STRIPE_KEY || ""
 
 // connecting to the mongo DB data base
 connnectDb(mongoUri);
 
-// caching the data
+// payment intent
+export const stripe = new Stripe(stripeKey)
 
+
+
+// caching the data
 export const myCache=new nodecache();
 
 // this is one middleware use to send the data from body of a request

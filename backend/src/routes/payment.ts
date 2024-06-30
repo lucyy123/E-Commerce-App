@@ -2,10 +2,14 @@
 
 import express from "express"
 import { AdminOnly } from "../middlewares/auth.js";
-import { newCoupon,applyDiscount, getAllCoupons, deleteCoupon, singleCoupon } from "../controllers/payment.js";
+import { newCoupon,applyDiscount, getAllCoupons, deleteCoupon, singleCoupon ,newPaymentIntent} from "../controllers/payment.js";
 
 const app =express.Router();
 
+
+// create a new payment intent
+// endPoint -->  api/v1/payment/create
+app.post("/create",newPaymentIntent)
 
 // create a new coupon
 // endPoint -->  api/v1/payment/coupon/new
