@@ -2,6 +2,8 @@ import { Suspense, lazy } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./component/header";
 import Loader from "./component/loader";
+import  { Toaster } from "react-hot-toast";
+
 
 
 
@@ -39,6 +41,7 @@ const App = () => {
 
         </Routes>
       </Suspense>
+     < Toaster position="bottom-center"/>
     </Router>
   );
 };
