@@ -5,7 +5,7 @@ import ErrorHandler from "../utils/errorHandlerClass.js";
 import { Order } from "../models/order.js";
 import { invalidateCatch } from "../utils/invalidateCache.js";
 import { myCache } from "../app.js";
-import { reduceStock } from "../utils/reduceStock.js";
+import { reduceStock } from "../utils/features.js";
 
 
 export const myOrders = TryCatch(async (req, res, next) => {
@@ -23,7 +23,7 @@ export const myOrders = TryCatch(async (req, res, next) => {
     myCache.set(key, JSON.stringify(myOrder));
   }
 
-await invalidateCatch({product:false,order:true,admin:true,userId:String(userID)})
+invalidateCatch({product:false,order:true,admin:true,userId:String(userID)})
   return res.status(200).json({
     success: true,
    myOrder
@@ -69,7 +69,7 @@ const { id:orderId }= req.params
     if(!order) return next (new ErrorHandler("Order not found",404))
     myCache.set(key, JSON.stringify(order));
   }
-await invalidateCatch({order:true,admin:true,orderId:orderId})
+invalidateCatch({order:true,admin:true,orderId:orderId})
   return res.status(200).json({
     success: true,
     order
@@ -111,7 +111,7 @@ export const newOrder = TryCatch(
 
     // re-validating the cache - Why ==> [if an order is place then the products data will be affected that]
 
-    await invalidateCatch({
+    invalidateCatch({
       product: true,
       order: true,
       admin: true,
@@ -153,7 +153,7 @@ switch (order.status) {
 
 await order.save();
 
-await invalidateCatch({product:false,order:true,admin:true,orderId,userId:order.user})
+invalidateCatch({product:false,order:true,admin:true,orderId,userId:order.user})
 
 return res.status(200).json({
 success:true,
@@ -175,7 +175,7 @@ if(!order) return next(new ErrorHandler("Order not found",404));
 
 
 await order.deleteOne();
-await invalidateCatch({product:false,order:true,admin:true,orderId})
+invalidateCatch({product:false,order:true,admin:true,orderId})
 
 return res.status(200).json({
 success:true,

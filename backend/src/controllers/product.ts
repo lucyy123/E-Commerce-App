@@ -181,7 +181,7 @@ export const newProduct = TryCatch(
       photo: photo?.path,
     });
 
-await invalidateCatch ({product:true})
+invalidateCatch ({product:true,admin:true})
 
     //"Malformed part header":- do not leave the space in the key of form data
     return res.status(201).json({
@@ -222,7 +222,7 @@ export const updateProduct = TryCatch(async (req, res, next) => {
   await product.save();
 
    
-  await invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
+  invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
   return res.status(200).json({
     success: true,
     message: "Product updated successfully",
@@ -244,7 +244,7 @@ export const deleteProduct = TryCatch(async (req, res, next) => {
 
   await product.deleteOne();
  
-  await invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
+  invalidateCatch({product:true,admin:true,productId:[String(product._id)]});
 
   return res.status(200).json({
     success: true,

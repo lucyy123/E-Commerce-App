@@ -4,12 +4,17 @@ import { errorMiddleWare } from "./middlewares/error.js";
 import nodecache from "node-cache"
 import { config } from "dotenv";
 import morgan from "morgan"
+import Stripe from "stripe";
 
 
 // importing routes
 import userRoute from "./routes/user.js";
 import productRoute from "./routes/product.js"
 import orderRoutes from "./routes/order.js"
+import paymentRoutes from "./routes/payment.js"
+import dashboardRoutes from "./routes/dashboard.js"
+
+
 
 
 const app = express();
@@ -17,12 +22,17 @@ const app = express();
 config()
 const port = process.env.PORT || 4000;
 const mongoUri= process.env.MONGO_URL || ""
+const stripeKey= process.env.STRIPE_KEY || ""
 
 // connecting to the mongo DB data base
 connnectDb(mongoUri);
 
-// caching the data
+// payment intent
+export const stripe = new Stripe(stripeKey)
 
+
+
+// caching the data
 export const myCache=new nodecache();
 
 // this is one middleware use to send the data from body of a request
@@ -43,6 +53,9 @@ return res.status(200).json({
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoutes);
+app.use("/api/v1/payment", paymentRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
+
 
 
 // for accessing the uploaded photos from URL
