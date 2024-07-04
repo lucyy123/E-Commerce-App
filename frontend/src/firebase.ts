@@ -15,9 +15,8 @@ const firebaseConfig = {
   messagingSenderId:import.meta.env.VITE_MESSAGIN_SENDER_ID,
   appId:import.meta.env.VITE_APP_ID,
 };
-console.log('import.meta.env.VITE_API_KEY:', import.meta.env.VITE_API_KEY)
 
-alert(import.meta.env.VITE_API_KEY)
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth= getAuth(app);

@@ -5,6 +5,7 @@ import nodecache from "node-cache"
 import { config } from "dotenv";
 import morgan from "morgan"
 import Stripe from "stripe";
+import cors from "cors"
 
 
 // importing routes
@@ -30,14 +31,12 @@ connnectDb(mongoUri);
 // payment intent
 export const stripe = new Stripe(stripeKey)
 
-
-
 // caching the data
 export const myCache=new nodecache();
 
 // this is one middleware use to send the data from body of a request
 app.use(express.json());
-
+app.use(cors({}))
 app.use(morgan("dev"))
 
 app.get("/", (req,res,next) => {

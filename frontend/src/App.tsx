@@ -2,10 +2,7 @@ import { Suspense, lazy } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Header from "./component/header";
 import Loader from "./component/loader";
-import  { Toaster } from "react-hot-toast";
-
-
-
+import { Toaster } from "react-hot-toast";
 
 /*//* use  Lazy ==> becouse app is open first time then its import all compenents or routes eg - /about, /cart  it will affect the performance*/
 const Home = lazy(() => import("./pages/home"));
@@ -14,7 +11,6 @@ const Cart = lazy(() => import("./pages/cart"));
 const Shipping = lazy(() => import("./pages/shipping"));
 const Login = lazy(() => import("./pages/login"));
 const Orders = lazy(() => import("./pages/order"));
-
 
 /*//* SUSPENCE  ==> when one of the childrens routes is loading then it will show the loader */
 const App = () => {
@@ -31,17 +27,12 @@ const App = () => {
 
           {/* Logged in user routes */}
           <Route>
-            <Route path="/shipping" element={<Shipping/>}/>
-            <Route path="/orders" element={<Orders/>}/>
-            
-
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/orders" element={<Orders />} />
           </Route>
-          
-
-
         </Routes>
       </Suspense>
-     < Toaster position="bottom-center"/>
+      <Toaster position="bottom-center" />
     </Router>
   );
 };
