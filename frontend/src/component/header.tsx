@@ -7,13 +7,15 @@ import {
   FaUser,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { User } from "../types/types";
 
-const user = {
-  _id: "",
-  role: "",
-};
 
-const Header = () => {
+type Propstype={
+user:User | null
+}
+
+const Header = ({user}:Propstype) => {
+  console.log('user from header:', user)
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -33,7 +35,7 @@ const Header = () => {
         <>
           {/** USER IS LOGIN */}
           <button onClick={() => setIsOpen((pre) => !pre)}>
-            <FaUser />
+            <FaUser  />
           </button>
           <dialog open={isOpen} style={{
             position: "absolute",

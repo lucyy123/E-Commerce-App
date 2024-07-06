@@ -26,15 +26,6 @@ const Login = () => {
         role: "user",
         _id: user.uid,
       });
-      console.log('userResponse:', {
-        name: user.displayName!,
-        email: user.email!,
-        photo: user.photoURL!,
-        gender: gender,
-        dob: date,
-        role: "user",
-        _id: user.uid,
-      })
 if("data" in userResponse){
 
   toast.success(userResponse.data!.message)

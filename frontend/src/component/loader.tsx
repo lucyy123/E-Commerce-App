@@ -1,9 +1,8 @@
-import React from 'react'
 
 const Loader = () => {
   return (
-    <div>
-      <h5>Loading...</h5>
+    <div className='flex justify-center items-center'>
+      <h5 className='text-[2.5rem] font-thin text-[gray]'>Loading...</h5>
     </div>
   )
 }
