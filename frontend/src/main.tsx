@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import App from "./App.tsx";
 import "./index.css";
-import { Provider } from "react-redux";
-import { strore } from "./redux/store.ts";
+import { store } from "./redux/store.ts";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Provider store={strore}>
+  <Provider store={store}>
     <App />
   </Provider>
 );

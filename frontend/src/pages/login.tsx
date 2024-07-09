@@ -1,12 +1,12 @@
-import { signInWithPopup } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { auth } from "../firebase";
-import toast from "react-hot-toast";
-import { useLoginMutation } from "../redux/apis/userApi";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { userMessageResponse } from "../types/apiTypes";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { Navigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { useLoginMutation } from "../redux/apis/userApi";
+import { userMessageResponse } from "../types/userApiTypes";
 
 const Login = () => {
   const [gender, setGender] = useState("");
@@ -32,7 +32,8 @@ if("data" in userResponse){
 }else{
   const error =userResponse.error as FetchBaseQueryError;
   const message = error.data as userMessageResponse
-  toast.error(message.message)
+  toast.error(message.message);
+ <Navigate to={"/"}/>
 }
   
     } catch (error) {

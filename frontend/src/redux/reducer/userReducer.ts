@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { UserReducerInitState } from "../../types/apiTypes";
 import { User } from "../../types/types";
+import { UserReducerInitState } from "../../types/userApiTypes";
 
 
 // create the reducer//

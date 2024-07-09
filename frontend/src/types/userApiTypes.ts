@@ -6,9 +6,9 @@ export type userMessageResponse ={
 }
 export type userResponse ={
     success:boolean,
-  user:User
+    user: User
 }
 export type UserReducerInitState={
     loading:boolean,
-    user:User|null
+    user: User | null
 }
