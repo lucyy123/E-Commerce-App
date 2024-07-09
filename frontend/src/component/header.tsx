@@ -8,6 +8,9 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { User } from "../types/types";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import toast from "react-hot-toast";
 
 
 type Propstype={
@@ -18,6 +21,16 @@ const Header = ({user}:Propstype) => {
   console.log('user from header:', user)
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+ const  handleLogout = async ()=>{
+  try {
+    await signOut(auth)
+    toast.success("sign out successfully")
+    setIsOpen(false)
+  } catch (error) {
+    toast.error("sign out failed")
+    
+  }
+ }
   return (
     <nav className="flex justify-end gap-3 items-center px-[2rem] py-[1rem]">
       {/*  Common Routings  */}
@@ -48,7 +61,7 @@ const Header = ({user}:Propstype) => {
               )}
 
               <Link to="/orders" onClick={() => setIsOpen(false)}>Orders</Link>
-              <button>
+              <button onClick={handleLogout} >
                 <FaSignOutAlt />
               </button>
             </div>

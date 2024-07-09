@@ -8,3 +8,16 @@ const Loader = () => {
 }
 
 export default Loader
+
+
+export const ShadowLoader =()=>{
+
+
+ return(
+  <div >
+   Loading......
+  
+</div>
+
+  )
+}

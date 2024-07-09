@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import bannerImage from "../assets/banner1.jpeg";
 import ProductCard from "../component/productCard";
+import { useLatestProductsQuery } from "../redux/apis/productApi";
+import { Product } from "../types/types";
+import Loader, { ShadowLoader } from "../component/loader";
 
 const Home = () => {
-  const addtocartHanlder=()=>{
+  const { data, isError, isLoading } = useLatestProductsQuery("");
+  console.log("data:", data);
 
-  }
+  const addtocartHanlder = () => {};
   return (
     <div className="px-10 h-[calc(100vh - 8rem)]">
       {/* Banner image */}
@@ -13,10 +17,10 @@ const Home = () => {
         style={{
           backgroundImage: `url(${bannerImage})`,
           height: "40vh",
-          width:"full",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          width: "full",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           margin: "2rem 0 2.5rem 0",
         }}
       ></section>
@@ -32,14 +36,25 @@ const Home = () => {
       {/* cards rows */}
 
       <main>
-        <ProductCard
-          productsId="f4df"
-          name="Samsung Galaxy S24 Ultra"
-          price={2563}
-          photo="https://m.media-amazon.com/images/I/81vxWpPpgNL._SL1500_.jpg"
-          handler={addtocartHanlder}
-          stock={42}
-        />
+
+
+
+
+        {isError?(<ShadowLoader></ShadowLoader>):(
+  data?.latestProducts.map((ele:Product)=> 
+    <ProductCard
+    key={ele._id}
+    productsId={ele._id}
+    name={ele.name}
+    price={ele.price}
+    photo="https://m.media-amazon.com/images/I/81vxWpPpgNL._SL1500_.jpg"
+    handler={addtocartHanlder}
+    stock={ele.stock}
+  />)
+        )
+        
+        }
+       
       </main>
     </div>
   );

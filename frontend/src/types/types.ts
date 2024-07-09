@@ -1,3 +1,4 @@
+import { Product } from './../../../backend/src/models/product';
 export type User = {
   name: string;
   email: string;
@@ -6,4 +7,15 @@ export type User = {
   role: string;
   _id: string;
   gender: string;
+};
+
+export type Product = {
+  _id: string;
+  name: string;
+  photo: string;
+  price: number;
+  stock: number;
+  category: string;
+  createdAt:string;
+  updatedAt:string;
 };
